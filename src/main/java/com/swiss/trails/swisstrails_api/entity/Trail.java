@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Entity 
 @Getter  @Setter 
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
 public class Trail {
     
     @Id 
