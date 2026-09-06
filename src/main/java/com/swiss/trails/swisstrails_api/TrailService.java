@@ -41,6 +41,6 @@ public class TrailService {
     }
 
     private TrailResponse toResponse(final Trail trail) {
-        return new TrailResponse(trail.getId(), trail.getName(), trail.getLengthKm(), trail.getElevation(),trail.getDifficulty());
+        return new TrailResponse(trail.getId(), trail.getName(), trail.getLengthKm(), trail.getElevation(),trail.getDifficulty(), trail.getCheckpoints().stream().map((c) -> c.getName()).toList()); 
     }
 }
