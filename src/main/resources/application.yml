@@ -1,0 +1,21 @@
+# application.yml
+server:
+  port: 8080
+
+spring:
+  h2:
+    console:
+      enabled: true
+
+swisstrails:
+  max-difficulty: extreme
+  max-results: 50
+  
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+swisstrails:
+  max-difficulty: extreme
+  max-results: 200
