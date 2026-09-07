@@ -1,4 +1,4 @@
-package com.swiss.trails.swisstrails_api.dto;
+package com.swiss.trails.swisstrails_api.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

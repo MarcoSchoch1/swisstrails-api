@@ -1,4 +1,4 @@
-package com.swiss.trails.swisstrails_api;
+package com.swiss.trails.swisstrails_api.service;
 
 import java.util.List;
 
@@ -31,16 +31,32 @@ public class TrailService {
         return toResponse(trailRepository.findById(id).orElseThrow(() -> new TrailNotFoundException(id))); 
     }
 
-    public TrailResponse createTrail(final TrailRequest trailRequest) {
-        final Trail trail = new Trail();
+    public TrailResponse getTrailByName(final String name) {
+        return toResponse(trailRepository.findByName(name).orElseThrow(() -> new TrailNotFoundException(name)));
+    }
+
+    public TrailResponse createOrUpdateTrail(final Long id, final TrailRequest trailRequest) {
+        if (id != null) {
+            return saveTrail(trailRepository.findById(id).orElseThrow(() -> new TrailNotFoundException(id)), trailRequest);
+        } else {
+            return saveTrail(new Trail(), trailRequest);
+        }
+    }
+
+    private TrailResponse saveTrail(final Trail trail, final TrailRequest trailRequest) {
         trail.setName(trailRequest.name());
         trail.setLengthKm(trailRequest.lengthKm());
         trail.setElevation(trailRequest.elevation());
         trail.setDifficulty(trailRequest.difficulty());
         return toResponse(trailRepository.save(trail));
+    } 
+    
+    public void deleteTrail(final Long id) {
+        trailRepository.delete(trailRepository.findById(id).orElseThrow(() -> new TrailNotFoundException(id)));
     }
 
     private TrailResponse toResponse(final Trail trail) {
         return new TrailResponse(trail.getId(), trail.getName(), trail.getLengthKm(), trail.getElevation(),trail.getDifficulty(), trail.getCheckpoints().stream().map((c) -> c.getName()).toList()); 
     }
+
 }

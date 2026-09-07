@@ -9,6 +9,9 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.swiss.trails.swisstrails_api.controller.TrailController;
+import com.swiss.trails.swisstrails_api.service.TrailService;
+
 @WebMvcTest  (TrailController.class)
 public class TrailControllerTest {
     @Autowired  
