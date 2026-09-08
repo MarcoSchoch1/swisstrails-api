@@ -24,7 +24,7 @@ public class Trail {
     private Long id;
     private String name;
     private double lengthKm;
-    private int elevation;
+    private Integer elevation;
     private String difficulty;
 
     @OneToMany(mappedBy = "trail", cascade = CascadeType.ALL)
