@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.swiss.trails.swisstrails_api.dto.TrailRequest;
 import com.swiss.trails.swisstrails_api.dto.TrailResponse;
+import com.swiss.trails.swisstrails_api.entity.Checkpoint;
 import com.swiss.trails.swisstrails_api.entity.Trail;
 import com.swiss.trails.swisstrails_api.exception.TrailNotFoundException;
 import com.swiss.trails.swisstrails_api.repository.TrailRepository;
@@ -55,6 +56,12 @@ public class TrailService {
         }
         if (trailRequest.difficulty() != null) {
             trail.setDifficulty(trailRequest.difficulty());
+        }
+        if (trailRequest.checkpointNames() != null) {
+            for (final Checkpoint checkpoint : trailRequest.checkpointNames()) {
+                checkpoint.setTrail(trail);
+                trail.getCheckpoints().add(checkpoint);
+            }
         }
         return toResponse(trailRepository.save(trail));
     }

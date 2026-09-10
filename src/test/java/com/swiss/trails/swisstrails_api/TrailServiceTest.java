@@ -14,20 +14,29 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.swiss.trails.swisstrails_api.dto.TrailRequest;
 import com.swiss.trails.swisstrails_api.dto.TrailResponse;
+import com.swiss.trails.swisstrails_api.entity.Checkpoint;
 import com.swiss.trails.swisstrails_api.entity.Trail;
 import com.swiss.trails.swisstrails_api.repository.TrailRepository;
 import com.swiss.trails.swisstrails_api.service.TrailService;
 
 @ExtendWith (MockitoExtension.class)
 public class TrailServiceTest {
-    
+
     @Mock TrailRepository repository;
     @InjectMocks TrailService service;
 
     @Test
     void createsATrail() {
-        when(repository.save(any())).thenReturn(new Trail(1L, "Fünf-Seen-Wanderung", 12.0, 500, "moderate", new ArrayList<>()));
-        TrailResponse result = service.createOrUpdateTrail(null, new TrailRequest("Fünf-Seen-Wanderung", 12.0, 500, "moderate"));
+        Checkpoint checkpoint = new Checkpoint();
+        checkpoint.setName("Seeblick");
+        checkpoint.setElevationM(650.0);
+
+        Trail savedTrail = new Trail(1L, "Fünf-Seen-Wanderung", 12.0, 500, "moderate", new ArrayList<>());
+        savedTrail.getCheckpoints().add(checkpoint);
+
+        when(repository.save(any())).thenReturn(savedTrail);
+        TrailResponse result = service.createOrUpdateTrail(null, new TrailRequest("Fünf-Seen-Wanderung", 12.0, 500, "moderate", new Checkpoint[] { checkpoint }));
         assertThat(result.name()).isEqualTo("Fünf-Seen-Wanderung");
+        assertThat(result.checkpointNames()).containsExactly("Seeblick");
     }
 }

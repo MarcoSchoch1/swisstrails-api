@@ -27,6 +27,6 @@ public class Trail {
     private Integer elevation;
     private String difficulty;
 
-    @OneToMany(mappedBy = "trail", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trail", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Checkpoint> checkpoints = new ArrayList<>();
 }
