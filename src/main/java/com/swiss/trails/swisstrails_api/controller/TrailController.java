@@ -28,8 +28,8 @@ public class TrailController {
         this.trailService = trailService;
     }
 
-    @PostMapping 
-    public ResponseEntity<String> addTrail(@Validated @RequestBody TrailRequest trailRequest) {
+    @PostMapping
+    public ResponseEntity<String> addTrail(@Validated(TrailRequest.OnCreate.class) @RequestBody TrailRequest trailRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body("Added: " + trailService.createOrUpdateTrail(null, trailRequest).name());
     }
 

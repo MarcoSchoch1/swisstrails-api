@@ -23,7 +23,7 @@ public class Trail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private double lengthKm;
+    private Double lengthKm;
     private Integer elevation;
     private String difficulty;
 

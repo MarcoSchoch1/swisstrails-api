@@ -44,12 +44,20 @@ public class TrailService {
     }
 
     private TrailResponse saveTrail(final Trail trail, final TrailRequest trailRequest) {
-        trail.setName(trailRequest.name());
-        trail.setLengthKm(trailRequest.lengthKm());
-        trail.setElevation(trailRequest.elevation());
-        trail.setDifficulty(trailRequest.difficulty());
+        if (trailRequest.name() != null) {
+            trail.setName(trailRequest.name());
+        }
+        if (trailRequest.lengthKm() != null) {
+            trail.setLengthKm(trailRequest.lengthKm());
+        }
+        if (trailRequest.elevation() != null) {
+            trail.setElevation(trailRequest.elevation());
+        }
+        if (trailRequest.difficulty() != null) {
+            trail.setDifficulty(trailRequest.difficulty());
+        }
         return toResponse(trailRepository.save(trail));
-    } 
+    }
     
     public void deleteTrail(final Long id) {
         trailRepository.delete(trailRepository.findById(id).orElseThrow(() -> new TrailNotFoundException(id)));
