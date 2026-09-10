@@ -29,11 +29,12 @@ public class TrailController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addTrail(@Validated(TrailRequest.OnCreate.class) @RequestBody TrailRequest trailRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Added: " + trailService.createOrUpdateTrail(null, trailRequest).name());
+    public ResponseEntity<TrailResponse> addTrail(
+            @Validated(TrailRequest.OnCreate.class) @RequestBody TrailRequest trailRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(trailService.createOrUpdateTrail(null, trailRequest));
     }
 
-    @GetMapping 
+    @GetMapping
     public ResponseEntity<List<TrailResponse>> listTrails(@RequestParam(required = false) String difficulty) {
         if (difficulty != null) {
             return ResponseEntity.status(HttpStatus.OK).body(trailService.getAllWithDifficulty(difficulty));
@@ -52,7 +53,8 @@ public class TrailController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TrailResponse> updateTrail(@PathVariable Long id,@Validated @RequestBody TrailRequest trailRequest) {
+    public ResponseEntity<TrailResponse> updateTrail(@PathVariable Long id,
+            @Validated @RequestBody TrailRequest trailRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(trailService.createOrUpdateTrail(id, trailRequest));
     }
 
